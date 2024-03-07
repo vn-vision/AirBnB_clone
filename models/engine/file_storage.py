@@ -2,6 +2,7 @@ import json
 from importlib import import_module
 from json.decoder import JSONDecodeError
 
+
 class FileStorage:
     ''' IT SERIALIZES INSTANCES TO A JSON FILE '''
 
@@ -42,4 +43,3 @@ class FileStorage:
     def all(self):
         ''' returns the __objects dictionary '''
         return self.__objects
-
