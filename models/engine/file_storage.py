@@ -1,40 +1,61 @@
+''' FileStorage class '''
 import json
 
 
 class FileStorage:
+    ''' this class saves data in json file and reloads
+    when needed'''
+
     __file_path = "file.json"
     __objects = {}
 
     def new(self, obj):
+        ''' sets in __objects in the obj
+        with key <obj class name>.id'''
+
         key = "{}.{}".format(type(obj).__name__, obj.id)
         self.__objects[key] = obj
 
     def save(self):
-        ser_dict = {key: value.to_dict() for key, value in self.__objects.items()}
-        with open(self.__file_path, 'w') as f:
-            json.dump(ser_dict, f)
+        ''' serializes __objects to JSON file '''
 
-    '''def reload(self):
         try:
             with open(self.__file_path, 'r') as f:
-                des_dict = json.load(f)
-                self.__objects = {k: self.load_instance(k, v) for k, v in des_dict.items()}
+                prev_data = json.load(f)
         except FileNotFoundError:
-            # Properly handle file not found error
-            print("File not found:", self.__file_path)
-        except json.JSONDecodeError:
-            # Properly handle JSON decoding error
-            print("Error decoding JSON file:", self.__file_path)
+            prev_data = {}
 
-    def load_instance(self, key, value):   
-        class_name, obj_id = key.split('.')
-        if class_name not in globals():
-            print("Class not jj found:", class_name)
-            return None
+        ser_dict = {key: value.to_dict()
+                    for key, value in self.__objects.items()}
 
-        cls = globals()[class_name]
-        return cls(**value)
-        '''
+        prev_data.update(ser_dict)
+        with open(self.__file_path, 'w') as f:
+            json.dump(prev_data, f)
+
+    def reload(self):
+        ''' deserializes JSON file to __objects
+        if the file exists'''
+        try:
+            from models.base_model import BaseModel
+            with open(self.__file_path, 'r') as f:
+                des_dict = json.load(f)
+            for key, value in des_dict.items():
+                class_name, obj_id = key.split('.')
+                cls = self.get_class(class_name)
+            if cls:
+                self.__objects[key] = cls(**value)
+            else:
+                print("Class not found:", class_name)
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
 
     def all(self):
+        ''' returns the dictionary __objects '''
         return self.__objects
+
+    def get_class(self, class_name):
+        if class_name == "BaseModel":
+            from models.base_model import BaseModel
+            return BaseModel
+        else:
+            return None  # Return None if class is not found
