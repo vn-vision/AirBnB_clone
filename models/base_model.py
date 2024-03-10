@@ -1,8 +1,15 @@
+''' The BaeModel class, introduction to Airbnb'''
 import uuid
 from datetime import datetime
 
+
 class BaseModel():
+    ''' The class model with different functions '''
+
     def __init__(self, *args, **kwargs):
+        ''' the initialization function, initialzing
+        different attributes '''
+
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -15,13 +22,19 @@ class BaseModel():
             self.updated_at = datetime.now()
 
     def save(self):
+        ''' updates new records and records the time '''
         self.updated_at = datetime.now()
 
     def to_dict(self):
-        obj_dict = self.__dict__.copy()
-        obj_dict['__class__'] = type(self).__name__
-        obj_dict['created_at'] = self.created_at.isoformat()
-        obj_dict['updated_at'] = self.updated_at.isoformat()
+        ''' returns a dictionary with class, name, model,
+        time it was created and updated '''
+
+        obj_dict = {'my_number': self.my_number,
+                    'name': self.name,
+                    '__class__': type(self).__name__,
+                    'updated_at': self.updated_at.isoformat(),
+                    'id': self.id,
+                    'created_at': self.created_at.isoformat(),}
         return obj_dict
 
     def __str__(self):
