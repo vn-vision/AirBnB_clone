@@ -2,7 +2,6 @@ import json
 from importlib import import_module
 from json.decoder import JSONDecodeError
 
-
 class FileStorage:
     ''' IT SERIALIZES INSTANCES TO A JSON FILE '''
 
@@ -30,16 +29,21 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 des_dict = json.load(f)
 
-            for key, obj in des_dict.items():
-                class_name = obj["__class__"]
-                module_name = "models.base_model"
-                module = import_module(module_name)
-                cls = getattr(module, class_name)
-                self.__objects[key] = cls(**obj)
+                self.__objects = {k: self.load_instance(k, v) for k, v in des_dict.items()}
 
-        except (FileNotFoundError, JSONDecodeError):
-            pass
+        except FileNotFoundError:
+            print("File not found, creating a new one...")
+        except JSONDecodeError:
+            print("Error decoding JSON file, creating a new one...")
+
+    def load_instance(self, key, value):
+        ''' Dynamically loads the instance based on class name '''
+        from models.base_model import BaseModel
+        class_name, obj_id = key.split('.')
+        cls = BaseModel
+        return cls(**value)
 
     def all(self):
         ''' returns the __objects dictionary '''
         return self.__objects
+
