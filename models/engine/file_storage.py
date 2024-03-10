@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 ''' FileStorage class '''
 import json
 
@@ -42,10 +43,11 @@ class FileStorage:
             for key, value in des_dict.items():
                 class_name, obj_id = key.split('.')
                 cls = self.get_class(class_name)
-            if cls:
-                self.__objects[key] = cls(**value)
-            else:
-                print("Class not found:", class_name)
+                if cls:
+                    self.__objects[key] = cls(**value)
+                else:
+                    print("Class not found:", class_name)
+
         except (FileNotFoundError, json.JSONDecodeError):
             pass
 
