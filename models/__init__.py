@@ -1,7 +1,6 @@
-#!/usr/bin/python3
-''' create a unque FileStorage instance for AirBnb '''
+''' This is model __init__ '''
 from models.engine.file_storage import FileStorage
 
-storage = FileStorage()
 
-# storage.reload()
+storage = FileStorage()
+storage.reload()
