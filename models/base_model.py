@@ -24,26 +24,34 @@ class BaseModel():
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            now = datetime.now()
+            self.created_at = now
+            self.updated_at = now
             storage.new(self)
 
     def save(self):
         ''' updates the public instance attribute updated_at'''
-        self.updated_at = datetime.now()
+        self.updated_at  = datetime.now()
 
     def to_dict(self):
         ''' returns a dictionary containing all keys/values of __dict__
         a key __class__ must be added to this dictionary'''
 
         dict_rep = self.__dict__.copy()
-        dict_rep["__class__"] = type(self).__name__
-        dict_rep['created_at'] = self.created_at.strftime(
-                '%Y-%m-%dT%H:%M:%S.%f')
-        dict_rep['updated_at'] = self.updated_at.strftime(
-                    '%Y-%m-%dT%H:%M:%S.%f')
+        # Add additional attributes if they exist
+        if hasattr(self, 'my_number'):
+
+            dict_rep.update({'my_number': self.my_number})
+        if hasattr(self, 'name'):
+            dict_rep.update({'name': self.name})
+
+        dict_rep.update({'__class__': type(self).__name__,
+                         'created_at': self.created_at.isoformat(),
+                         'updated_at': self.updated_at.isoformat()
+                         })
 
         return dict_rep
+
 
     def __str__(self):
         ''' updates the public instance attribute updated_at '''
