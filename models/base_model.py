@@ -37,18 +37,13 @@ class BaseModel():
         ''' returns a dictionary containing all keys/values of __dict__
         a key __class__ must be added to this dictionary'''
 
-        dict_rep = self.__dict__.copy()
-        # Add additional attributes if they exist
-        if hasattr(self, 'my_number'):
-
-            dict_rep.update({'my_number': self.my_number})
-        if hasattr(self, 'name'):
-            dict_rep.update({'name': self.name})
-
-        dict_rep.update({'__class__': type(self).__name__,
-                         'created_at': self.created_at.isoformat(),
-                         'updated_at': self.updated_at.isoformat()
-                         })
+        dict_rep = {'my_number': self.my_number,
+                    'name': self.name,
+                    '__class__': type(self).__name__,
+                    'updated_at': self.updated_at.isoformat(),
+                    'id': self.id,
+                    'created_at': self.created_at.isoformat(),
+                    }
 
         return dict_rep
 
