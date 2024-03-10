@@ -2,6 +2,7 @@ import json
 from importlib import import_module
 from json.decoder import JSONDecodeError
 
+
 class FileStorage:
     ''' IT SERIALIZES INSTANCES TO A JSON FILE '''
 
@@ -29,7 +30,8 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 des_dict = json.load(f)
 
-                self.__objects = {k: self.load_instance(k, v) for k, v in des_dict.items()}
+                self.__objects = {k: self.load_instance(k, v)
+                                  for k, v in des_dict.items()}
 
         except FileNotFoundError:
             print("File not found, creating a new one...")
@@ -46,4 +48,3 @@ class FileStorage:
     def all(self):
         ''' returns the __objects dictionary '''
         return self.__objects
-

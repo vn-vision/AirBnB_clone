@@ -4,20 +4,21 @@ import cmd
 from models.base_model import BaseModel as BM
 from models.engine.file_storage import FileStorage as FS
 
+
 class HBNBCommand(cmd.Cmd):
     ''' this is the class definition '''
-    prompt = '(hbnb) ' 
+    prompt = '(hbnb) '
 
     def validation(self, args):
         ''' this is a custom function to check class name '''
 
         cl_miss = "** class name missing **"
-        cl_NA = "** class doesn't exist **" 
+        cl_NA = "** class doesn't exist **"
 
         if not args:
             print(cl_miss)
             return False
-        
+
         if args[0] != "BaseModel" and args[0] != "all":
             print(cl_NA)
             return False
@@ -103,13 +104,13 @@ class HBNBCommand(cmd.Cmd):
                 for instance in details.values():
                     print(instance)
             elif args:
-                instances = [instance for instance in details.values() if instance.__class__.__name__ == args[0]]
+                instances = [instance for instance in details.values()
+                             if instance.__class__.__name__ == args[0]]
                 if instances:
                     for instance in instances:
                         print(instance)
                 else:
                     print("** no instance found **")
-
 
 
 if __name__ == '__main__':
