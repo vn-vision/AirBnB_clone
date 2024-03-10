@@ -4,7 +4,7 @@ It defines all common attributes/methods for other classes
 '''
 import uuid
 from datetime import datetime
-from models import storage
+# from models import storage
 
 
 class BaseModel():
@@ -27,7 +27,7 @@ class BaseModel():
             now = datetime.now()
             self.created_at = now
             self.updated_at = now
-            storage.new(self)
+            # storage.new(self)
 
     def save(self):
         ''' updates the public instance attribute updated_at'''
@@ -37,12 +37,17 @@ class BaseModel():
         ''' returns a dictionary containing all keys/values of __dict__
         a key __class__ must be added to this dictionary'''
 
-        dict_rep = {'my_number': self.my_number,
-                    'name': self.name,
+        if hasattr(self, 'my_number'):
+            my_num = self.my_number
+        if hasattr(self, 'name'):
+            name = self.name
+
+        dict_rep = {'my_number': my_num,
+                    'name': name,
                     '__class__': type(self).__name__,
                     'updated_at': self.updated_at.isoformat(),
                     'id': self.id,
-                    'created_at': self.created_at.isoformat(),
+                    'created_at': self.created_at.isoformat()
                     }
 
         return dict_rep

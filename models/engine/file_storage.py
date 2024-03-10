@@ -14,7 +14,7 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump(ser_dict, f)
 
-    def reload(self):
+    '''def reload(self):
         try:
             with open(self.__file_path, 'r') as f:
                 des_dict = json.load(f)
@@ -26,16 +26,15 @@ class FileStorage:
             # Properly handle JSON decoding error
             print("Error decoding JSON file:", self.__file_path)
 
-    def load_instance(self, key, value):
-        from models.base_model import BaseModel
-
+    def load_instance(self, key, value):   
         class_name, obj_id = key.split('.')
         if class_name not in globals():
-            print("Class not found:", class_name)
+            print("Class not jj found:", class_name)
             return None
 
         cls = globals()[class_name]
         return cls(**value)
+        '''
 
     def all(self):
         return self.__objects
