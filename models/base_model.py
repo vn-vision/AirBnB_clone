@@ -29,18 +29,10 @@ class BaseModel():
         ''' returns a dictionary with class, name, model,
         time it was created and updated '''
 
-        if self.my_number and self.name:
-            obj_dict = {'my_number': self.my_number,
-                    'name': self.name,
-                    '__class__': type(self).__name__,
-                    'updated_at': self.updated_at.isoformat(),
-                    'id': self.id,
-                    'created_at': self.created_at.isoformat(),}
-        else:
-            obj_dict = self.__dict__.copy()
-            obj_dict['__class__'] = type(self).__name__
-            obj_dict['created_at'] = self.created_at.isoformat()
-            obj_dict['updated_at'] = self.updated_at.isoformat()
+        obj_dict = self.__dict__.copy()
+        obj_dict['__class__'] = type(self).__name__
+        obj_dict['created_at'] = self.created_at.isoformat()
+        obj_dict['updated_at'] = self.updated_at.isoformat()
 
         return obj_dict
 
