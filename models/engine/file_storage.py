@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 ''' FileStorage class '''
 import json
+from models.state import State
+from models.review import Review
+from models.place import Place
+from models.amenity import Amenity
+from models.city import City
 
 
 class FileStorage:
@@ -38,6 +43,7 @@ class FileStorage:
         if the file exists'''
         try:
             from models.base_model import BaseModel
+            from models.user import User
             with open(self.__file_path, 'r') as f:
                 des_dict = json.load(f)
             for key, value in des_dict.items():
@@ -59,5 +65,16 @@ class FileStorage:
         if class_name == "BaseModel":
             from models.base_model import BaseModel
             return BaseModel
+        elif class_name == "User":
+            from models.user import User
+            return User
+        elif class_name == 'City':
+            return City
+        elif class_name == 'Review':
+            return Review
+        elif class_name == 'Amenity':
+            return Amenity
+        elif class_name == 'State':
+            return State
         else:
             return None  # Return None if class is not found

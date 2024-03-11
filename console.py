@@ -3,6 +3,12 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.city import City
+from models.state import State
+from models.review import Review
+from models.place import Place
+from models.amenity import Amenity
 
 
 class HBNBCommand(cmd.Cmd):
@@ -31,6 +37,9 @@ class HBNBCommand(cmd.Cmd):
             return
 
         arg = arg.split()
+        if arg[0] not in ['BaseModel', 'User', 'State',
+                          'City', 'Amenity', 'Place', 'Review']:
+            print("** class doesn't exist **")
 
         try:
             new_instance = eval(arg[0])()
@@ -49,7 +58,8 @@ class HBNBCommand(cmd.Cmd):
 
         arg = arg.split()
 
-        if arg[0] not in ['BaseModel']:
+        if arg[0] not in ['BaseModel', 'User', 'State',
+                          'City', 'Amenity', 'Place', 'Review']:
             print("** class doesn't exist **")
             return
 
@@ -75,7 +85,8 @@ class HBNBCommand(cmd.Cmd):
 
         arg = arg.split()
 
-        if arg[0] not in ['BaseModel']:
+        if arg[0] not in ['BaseModel', 'User', 'State',
+                          'City', 'Amenity', 'Place', 'Review']:
             print("** class doesn't exist **")
             return
 
@@ -104,7 +115,8 @@ class HBNBCommand(cmd.Cmd):
 
         arg = arg.split()
 
-        if arg[0] not in ['BaseModel']:
+        if arg[0] not in ['BaseModel', 'User', 'State',
+                          'City', 'Amenity', 'Place', 'Review']:
             print("** class doesn't exist **")
             return
 
@@ -119,7 +131,8 @@ class HBNBCommand(cmd.Cmd):
 
         arg = arg.split()
 
-        if arg[0] not in ['BaseModel']:
+        if arg[0] not in ['BaseModel', 'User', 'State',
+                          'City', 'Amenity', 'Place', 'Review']:
             print("** class doesn't exist **")
             return
 
