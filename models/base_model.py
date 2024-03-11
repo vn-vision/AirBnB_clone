@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-''' The BaeModel class, introduction to Airbnb'''
+''' The BaseModel class, introduction to Airbnb'''
 import uuid
 from datetime import datetime
 
