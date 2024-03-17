@@ -3,7 +3,7 @@
 
 import unittest
 from models.base_model import BaseModel
-from models.place import Place
+from models.place import Place  # Added import statement for Place
 from models.state import State
 from models.city import City
 from models.review import Review
